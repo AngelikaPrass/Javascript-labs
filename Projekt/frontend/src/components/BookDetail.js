@@ -1,11 +1,14 @@
 import { useState, useEffect } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import { useHistory } from "react-router-dom";
+
 const axios = require('axios');
 
 const BookDetail = () => {
     const [bookDetail, setBookDetail] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
+    let history = useHistory();
 
     const {id} = useParams();
     
@@ -20,6 +23,20 @@ const BookDetail = () => {
         setIsLoading(false);
 
     })}, [id])
+
+    const deleteBook = () => {
+        return(
+            axios.delete(`http://localhost:5000/api/book/${id}`)
+            .then(res => {
+                console.log(res.message);
+                alert("Książka została usunięta");
+                history.go(-1);
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+        )
+    };
 
     return(
         <div>
@@ -38,8 +55,10 @@ const BookDetail = () => {
             </div>
             <div className="rating"> {bookDetail.rating} rate </div>
             <div className="buttons">
-            <button> Usuń </button>
+            <button onClick={deleteBook}> Usuń </button>
+            <Link to={`/editbook/${id}`}>
             <button> Edytuj </button>
+            </Link>
             </div>
             </div> 
             }

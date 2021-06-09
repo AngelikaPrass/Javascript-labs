@@ -1,17 +1,18 @@
 import React from 'react';
 import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
+import { useHistory } from "react-router-dom";
 import axios from 'axios';
 
 const Dashboard=(props) => {
-
-    const [submiting, setSubmiting] = useState(false)
+    const [submiting, setSubmiting] = useState(false);
     const [title, setTitle] = useState('');
     const [author, setAuthor] = useState('');
     const [genre, setGenre] = useState('');
     const [date, setDate] = useState('');
     const [description, setDescription] = useState('');
     const [coverImage, setCoverImage] = useState('');
+    let history = useHistory();
     
     useEffect(() => {
         console.log(props);
@@ -57,9 +58,11 @@ validate={(values)=>{
     if (!values.author) errors.author="Wymagane";
     if (!values.genre) errors.genre="Wymagane";
     if (!values.date) errors.date="Wymagane";
+    if (Date.parse(values.date) > Date.now()) {
+        errors.date = "Data nie może być późniejsza niż dzisiejsza"
+    };
     if (!values.description) errors.description="Wymagane";
     if (!values.coverImage) errors.coverImage="Wymagane";
-
     return errors; 
 }}
 onSubmit={(values) => {
@@ -74,11 +77,13 @@ onSubmit={(values) => {
         image_url: values.coverImage
     }).then(res => {
         console.log(res);
-        setSubmiting(false);
+        setSubmiting(true);
+        alert("Dodano książkę");
+        history.push("/books");
         resetForm();
     }).catch(err => {
         console.log(err.message);
-        setSubmiting(false);
+        setSubmiting(true);
     });
 } else if(props.type === "edit"){
     setSubmiting(true);
@@ -91,43 +96,60 @@ onSubmit={(values) => {
         image_url: values.coverImage
     }).then(res => {
         console.log(res);
-        setSubmiting(false);
+        setSubmiting(true);
         resetForm();
+        history.go(-1);
     }).catch(err => {
         console.log(err.message);
-        setSubmiting(false);
+        setSubmiting(true);
     });
 }
 }}
 >
 <Form >
+    <ul className="wrapper">
+    <li className="form-row">
     <label htmlFor="title"> Tytuł: </label>
     <Field name="title"/>
-    <ErrorMessage name="title" component="div"/>
+    <ErrorMessage name="title" component="div" className="err"/>
+    </li>
 
+    <li className="form-row">
     <label htmlFor="author"> Autor: </label>
     <Field name="author"/>
-    <ErrorMessage name="author" component="div"/>
+    <ErrorMessage name="author" component="div" className="err"/>
+    </li>
 
+    <li className="form-row">
     <label htmlFor="genre"> Gatunek: </label>
     <Field name="genre"/>
-    <ErrorMessage name="genre" component="div"/>
-
+    <ErrorMessage name="genre" component="div" className="err"/>
+    </li>
+    
+    <li className="form-row">
     <label htmlFor="date"> Data dodania: </label>
     <Field name="date"
     type="date"/>
-    <ErrorMessage name="date" component="div"/>
+    <ErrorMessage name="date" component="div" className="err"/>
+    </li>
 
+    <li className="form-row">
     <label htmlFor="description"> Opis: </label>
     <Field name="description"/>
-    <ErrorMessage name="description" component="div"/>
+    <ErrorMessage name="description" component="div" className="err"/>
+    </li>
 
+    <li className="form-row">
     <label htmlFor="coverImage"> Okładka: </label>
     <Field name="coverImage"/>
-    <ErrorMessage name="coverImage" component="div"/>
+    <ErrorMessage name="coverImage" component="div" className="err"/>
 
+    </li>
+    <li className="form-row">
     <button type='submit' disabled={submiting}> Zatwierdź </button>
-
+    </li>
+    
+    </ul>
 </Form>
 </ Formik>
 </div>

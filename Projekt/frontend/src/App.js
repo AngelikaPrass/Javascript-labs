@@ -4,8 +4,9 @@ import { useState } from 'react'
 import Home from "./components/Home";
 import Navbar from './components/Navbar'
 import Books from "./components/Books";
-import Dashboard from "./components/Dashboard";
 import BookDetail from "./components/BookDetail";
+import EditBook from "./components/EditBook";
+import AddBook from "./components/AddBook";
 
 const App=()=>{
     const [dataChange, setDataChange] = useState(true);
@@ -17,8 +18,11 @@ const App=()=>{
                     <Route exact path="/">
                         <Home />
                     </Route>
-                    <Route exact path="/dashboard">
-                        <Dashboard type="edit"/>
+                    <Route exact path="/addbook">
+                        <AddBook />
+                    </Route>
+                    <Route exact path="/editbook/:id">
+                        <EditBook />
                     </Route>
                     <Route exact path="/books">
                         <Books />

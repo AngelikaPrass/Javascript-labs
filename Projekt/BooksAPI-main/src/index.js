@@ -94,7 +94,6 @@ app.post('/api/book/:id/rate', async (req, res) => {
 
 app.delete('/api/book/:id', async (req, res) => {
     const id = req.params.id;
-    console.log('test');
     const response = await client.query("DELETE from book WHERE id = $1", [id]);
 
     return response.rowCount > 0 ? res.sendStatus(200) : res.sendStatus(400); 

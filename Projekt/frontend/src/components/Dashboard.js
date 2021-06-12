@@ -54,15 +54,18 @@ return(
 }}
 validate={(values)=>{
     const errors={};
+    const hasNumber = /\d/;
     if (!values.title) errors.title="Wymagane";
     if (!values.author) errors.author="Wymagane";
+    if (hasNumber.test(values.author)) errors.author="Autor nie może mieć cyfry w imieniu / nazwisku";
     if (!values.genre) errors.genre="Wymagane";
     if (!values.date) errors.date="Wymagane";
     if (Date.parse(values.date) > Date.now()) {
-        errors.date = "Data nie może być późniejsza niż dzisiejsza"
+        errors.date = "Data nie może być późniejsza niż dzisiejsza";
     };
     if (!values.description) errors.description="Wymagane";
     if (!values.coverImage) errors.coverImage="Wymagane";
+    if (!values.coverImage.includes("http://")) errors.coverImage="Niepoprawny link";
     return errors; 
 }}
 onSubmit={(values) => {

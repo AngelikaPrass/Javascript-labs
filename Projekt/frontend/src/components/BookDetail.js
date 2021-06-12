@@ -1,6 +1,7 @@
-import { useState, useEffect } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import { useState, useEffect } from 'react';
+import { Link, useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
+import Rating from './Rating';
 
 const axios = require('axios');
 
@@ -11,7 +12,8 @@ const BookDetail = () => {
     let history = useHistory();
 
     const {id} = useParams();
-    
+
+
     useEffect(() => {
         axios.get(`http://localhost:5000/api/book/${id}`).then(res => {
             setBookDetail(res.data);
@@ -22,7 +24,7 @@ const BookDetail = () => {
         setIsError(true);
         setIsLoading(false);
 
-    })}, [id])
+    })}, [id]);
 
     const deleteBook = () => {
         return(
@@ -37,6 +39,9 @@ const BookDetail = () => {
             })
         )
     };
+
+
+
 
     return(
         <div>
@@ -53,7 +58,10 @@ const BookDetail = () => {
             <div className="description">
             <p> {bookDetail.description} </p>
             </div>
-            <div className="rating"> {bookDetail.rating} rate </div>
+            <div className="rating"> {bookDetail.rating}
+            ocena: 
+            <Rating id={bookDetail.id}/>
+            </div>
             <div className="buttons">
             <button onClick={deleteBook}> Usuń </button>
             <Link to={`/editbook/${id}`}>

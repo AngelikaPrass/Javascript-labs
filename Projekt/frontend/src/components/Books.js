@@ -1,6 +1,6 @@
 import {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { HiFilter, HiSwitchVertical } from "react-icons/hi";
+import { HiFilter, HiSwitchVertical, HiOutlineStar } from "react-icons/hi";
 import ScrollButton from './ScrollButton';
 
 const axios = require("axios");
@@ -163,6 +163,10 @@ return (
                     <h5> {book.genre} </h5>
                     <h5> {new Date(book.release_date).toLocaleDateString('en-CA')} </h5>
                     <p> {book.rating} </p>
+                    </div>
+                    <div className="rating">
+                        ocena: 
+                    <HiOutlineStar />
                     </div>
                     <div className="checkbox"> 
                         <input type="checkbox" value="checkbox" onClick={() => setToDelete([...toDelete, book.id])}/>

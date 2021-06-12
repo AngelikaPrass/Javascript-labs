@@ -1,7 +1,8 @@
 import {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { HiFilter, HiSwitchVertical, HiOutlineStar } from "react-icons/hi";
+import { HiFilter, HiSwitchVertical, HiOutlineTrash, HiHeart } from "react-icons/hi";
 import ScrollButton from './ScrollButton';
+import AddToFaves from "./AddToFaves";
 
 const axios = require("axios");
 const Books=() => {
@@ -93,13 +94,14 @@ const Books=() => {
         setToDelete([]);
         alert("Usunięto wszystkie zaznaczone książki.");
 };
-const style1 = {
-    width: "30vw",
-    height: "auto"
-}
-const style2 = {
-    visibility: "visible"
-}
+
+    const style1 = {
+        width: "25em",
+        height: "auto"
+    };
+    const style2 = {
+        visibility: "visible"
+    };
 
 return (
     <div>
@@ -119,9 +121,9 @@ return (
             <option value="fantastyka"> fantastyka </option>
             <option value="literatura faktu"> literatura faktu </option>
         </select>
-        <div className="dupa">
+        <div className="authors">
             <form>
-            <ul>
+            <ul style={styling ? style2 : {}}>
             {Array.from(authors).map(author => (
                 <li> 
                     <input type="radio" name="radio" value={author} onClick={(e) => setFilterFunction(() => authorFilterMaker(e.target.value))}></input>
@@ -162,13 +164,13 @@ return (
                     <div className="wrapper-genre">
                     <h5> {book.genre} </h5>
                     <h5> {new Date(book.release_date).toLocaleDateString('en-CA')} </h5>
-                    <p> {book.rating} </p>
                     </div>
                     <div className="rating">
-                        ocena: 
-                    <HiOutlineStar />
+                        ocena: {book.rating ? book.rating.toString().slice(0,3) : "0"} / 5
+                        <AddToFaves />
                     </div>
                     <div className="checkbox"> 
+                        <HiOutlineTrash />
                         <input type="checkbox" value="checkbox" onClick={() => setToDelete([...toDelete, book.id])}/>
                         <label htmlFor="massdelete"></label>
                     </div>
@@ -179,5 +181,4 @@ return (
         </div>
     );
 };
-
 export default Books;

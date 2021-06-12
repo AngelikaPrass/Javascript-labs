@@ -46,6 +46,7 @@ a {
 .filter{
     position: fixed;
     top: 10vh;
+    height: 2em;
     border-radius: 5px;
     border: 1px solid $primary;
     left: 0px;
@@ -53,12 +54,18 @@ a {
     background-color: $background-color;
     padding: 0.5em;
     margin: 0;
+    max-width: 15em;
+    width: 100%;
     select {
         margin: 0 0.1em;
         width: auto;
         height: 2em;
         visibility: hidden;
     }
+    .authors{
+        visibility: hidden;
+    }
+
 }
 .sorting {
     position: fixed;
@@ -129,12 +136,21 @@ a {
             justify-self: end;
             margin-right: 2em;
             align-self: end;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
         }
         img {
             grid-row: span 3;
             max-height: 100%;
             max-width: 100%;
             justify-self: center;
+        }
+        .wrapper-author{
+            grid-column: 2;
+            grid-row: 1;
+            align-self: start;
+            justify-self: start;
         }
         .author{
             color: $secondary;
@@ -150,6 +166,13 @@ a {
             justify-self: end;
             margin-right: 2em;
             align-self: end;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+            align-items: center;
+            svg {
+                height: 2em;
+            }
             input {
                 -webkit-appearance: none;
                 background-color: #fafafa;
@@ -159,6 +182,7 @@ a {
                 border-radius: 3px;
                 display: inline-block;
                 position: relative;
+                z-index: 1;
                 &:active, &:checked:active {
                     box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
                 }
@@ -180,7 +204,9 @@ a {
         }
     }
 }
-
+// .heart {
+//     // align-self: flex-end;
+// }
 .bookDetail {
     margin: 10px;
     padding: 10px;
@@ -238,7 +264,9 @@ a {
             cursor: pointer;
         }
     }
-
+}
+.hovered {
+    fill: $primary;
 }
 
 @media (max-width: 600px) {

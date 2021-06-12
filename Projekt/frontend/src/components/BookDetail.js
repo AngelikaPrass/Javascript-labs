@@ -9,6 +9,7 @@ const BookDetail = () => {
     const [bookDetail, setBookDetail] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
     const [isError, setIsError] = useState(false);
+    const [voted, setVoted] = useState(false);
     let history = useHistory();
 
     const {id} = useParams();
@@ -24,7 +25,7 @@ const BookDetail = () => {
         setIsError(true);
         setIsLoading(false);
 
-    })}, [id]);
+    })}, [id, voted]);
 
     const deleteBook = () => {
         return(
@@ -59,9 +60,8 @@ const BookDetail = () => {
             <p> {bookDetail.description} </p>
             </div>
             <div className="rating">
-            ocena: 
-            <Rating id={bookDetail.id}/>
-            {bookDetail.rating}
+            <Rating id={bookDetail.id} rel={setVoted} value={voted} />
+            ocena: {bookDetail.rating ? bookDetail.rating.toString().slice(0,3) : "0"} / 5
             </div>
             <div className="buttons">
             <button onClick={deleteBook}> Usuń </button>

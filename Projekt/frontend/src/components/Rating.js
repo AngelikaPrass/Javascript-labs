@@ -10,9 +10,7 @@ const Rating = (props) => {
 
     return(
     <div className="stars">
-    <HiStar className="ratingStar" fill={fill} onClick={() => rate(1)} /> <HiStar className="ratingStar" fill={fill} onClick={() => rate(2)} /> 
-    <HiStar className="ratingStar" fill={fill} onClick={() => rate(3)}/> <HiStar className="ratingStar" fill={fill} onClick={() => rate(4)}/> 
-    <HiStar className="ratingStar" fill={fill} onClick={() => rate(1)}/> 
+    <HiStar className="ratingStar" fill={fill} onClick={() => rate(1)} /> <HiStar className="ratingStar" fill={fill} onClick={() => rate(2)} /> <HiStar className="ratingStar" fill={fill} onClick={() => rate(3)}/> <HiStar className="ratingStar" fill={fill} onClick={() => rate(4)}/> <HiStar className="ratingStar" fill={fill} onClick={() => rate(5)}/> 
 </div>
 )
 }

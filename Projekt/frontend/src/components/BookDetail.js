@@ -58,9 +58,10 @@ const BookDetail = () => {
             <div className="description">
             <p> {bookDetail.description} </p>
             </div>
-            <div className="rating"> {bookDetail.rating}
+            <div className="rating">
             ocena: 
             <Rating id={bookDetail.id}/>
+            {bookDetail.rating}
             </div>
             <div className="buttons">
             <button onClick={deleteBook}> Usuń </button>

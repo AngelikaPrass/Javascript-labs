@@ -9,7 +9,7 @@ const Books=() => {
     const [data, setData]=useState([]);
     const [sortingFunction, setSortingFunction] = useState(()=>()=>1);
     const [filterFunction, setFilterFunction ] = useState(() => () => true);
-
+    const [toDelete, setToDelete] = useState([]);
 
     const [isLoading, setIsLoading]=useState(true);
     const [isError, setIsError]=useState(false);
@@ -70,6 +70,20 @@ const Books=() => {
         if (e.target.value ==="") setFilterFunction(() => () => true);
         else setFilterFunction(()=>genreFilterMaker(e.target.value));
     }
+    const massDelete = () => {
+        for(const id of toDelete){
+            axios.delete(`http://localhost:5000/api/book/${id}`)
+            .then(res => {
+                console.log(res.message);
+            })
+            .catch(err => {
+                console.log(err.message);
+            })
+        }
+        setData(data.filter(book => !toDelete.includes(book.id)));
+        setToDelete([]);
+        alert("Usunięto wszystkie zaznaczone książki.");
+};
 
     return (
         <div>
@@ -103,6 +117,9 @@ const Books=() => {
                   <option value="authorDESC"> Autor malejąco </option>
             </select> 
             </div>
+            <div className="deleteButton"> 
+                <button onClick={() => massDelete()}> Usuń wszystkie zaznaczone </button>
+            </div>
         <div className="books-list">
             {isError && <div> Wystąpił błąd </div>}
             {isLoading && <div> Ładowanie... </div>}
@@ -117,10 +134,13 @@ const Books=() => {
                     </div>
                     <div className="wrapper-genre">
                     <h5> {book.genre} </h5>
-                    <h5> {book.release_date.slice(0, 10)} </h5>
+                    <h5> {new Date(book.release_date).toLocaleDateString('en-CA')} </h5>
                     <p> {book.rating} </p>
                     </div>
-                    <br />
+                    <div className="checkbox"> 
+                        <input type="checkbox" value="checkbox" onClick={() => setToDelete([...toDelete, book.id])}/>
+                        <label htmlFor="massdelete"></label>
+                    </div>
                 </div>
             ))}
             <ScrollButton />

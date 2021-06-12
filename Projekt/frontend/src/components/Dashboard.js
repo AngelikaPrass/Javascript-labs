@@ -31,7 +31,7 @@ const Dashboard=(props) => {
             })
             .catch(res=>console.log(res))
     }
-}, [])
+}, [props])
 
 const resetForm = () => {
     setTitle('');
@@ -135,12 +135,15 @@ onSubmit={(values) => {
 
     <li className="form-row">
     <label htmlFor="description"> Opis: </label>
-    <Field name="description"/>
+    <Field name="description"
+    as="textarea"
+    rows="10"
+    cols="43"/>
     <ErrorMessage name="description" component="div" className="err"/>
     </li>
 
     <li className="form-row">
-    <label htmlFor="coverImage"> Okładka: </label>
+    <label htmlFor="coverImage"> Link do okładki: </label>
     <Field name="coverImage"/>
     <ErrorMessage name="coverImage" component="div" className="err"/>
 

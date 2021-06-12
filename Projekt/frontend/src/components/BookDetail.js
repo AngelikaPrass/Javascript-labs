@@ -48,7 +48,7 @@ const BookDetail = () => {
             <div className="wrapper-author">
             <h2> {bookDetail.title} </h2>
             <h4> {bookDetail.author} </h4>
-            <div> {bookDetail.release_date.slice(0, 10)} </div>
+            <div> {new Date(bookDetail.release_date).toLocaleDateString('en-CA')} </div>
             </div>
             <div className="description">
             <p> {bookDetail.description} </p>

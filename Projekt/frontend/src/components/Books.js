@@ -20,7 +20,7 @@ const Books=() => {
     const [authors, setAuthors] = useState(new Set());
     const [favourites, setFavourites] = useState(new Set());
     const [favFilter, setFavFilter]=useState(()=>()=>1);
-    const [resetFavs, setResetFavs] = useState(false);
+    const [resetFavs, setResetFavs] = useState(true);
     const [byAuthor, setByAuthor ] = useState(() => () => 1);
     const [searchTerm, setSearchTerm] = useState("");
     const [color, setColor] = useState(false);

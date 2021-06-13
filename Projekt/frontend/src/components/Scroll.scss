@@ -1,0 +1,13 @@
+$primary: #01fff4;
+
+.scrollUp {
+    position: fixed;
+    right: 2em;
+    bottom: 1em;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
+    border: none;
+    color: black;
+    background-color: $primary;
+}

@@ -1,5 +1,6 @@
 import React, {useState} from 'react';
 import { HiArrowUp } from "react-icons/hi";
+import "./Scroll.scss";
 
 const ScrollButton = () =>{  
   const [visible, setVisible] = useState(false)

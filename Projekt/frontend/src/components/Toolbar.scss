@@ -1,0 +1,132 @@
+$background-color: #121212;
+$component: #1d1d1d;
+$text: #e8e8e8;
+$primary: #01fff4;
+$secondary: #ff1178;
+
+.toolbar {
+    position: absolute;
+    top: 6vh;
+    left: 1vw;
+    color: $text;
+    width: 20%;
+    min-height: 15em;
+    border: 1px solid $primary;
+    border-radius: 1em;
+    padding: 1em;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr;
+    column-gap: 1vw;
+    row-gap: 0.2em;
+    grid-template-areas: 
+    "search heart"
+    "sort authors"
+    "filter authors";
+
+    .showFavourites {
+        grid-area: heart;
+        align-self: start;
+        justify-self: end;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        p {
+            margin-right: 0.5em;
+        }
+    }
+    .filter{
+        grid-area: filter;  
+        justify-self: start;
+        align-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+    .authors{
+        grid-area: authors;
+        justify-self: end;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        ul {
+            list-style-type: none;
+        }
+    }
+    .search{
+        grid-area: search;
+        justify-self: start;
+        align-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        input{
+            max-width: 10em;
+            border-radius: 0.5em;
+            min-height: 1.5em;
+            border: 1px solid black;
+        }
+    }
+    .sorting {
+        grid-area: sort;
+        justify-self: start;
+        align-self: start;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+.deleteButton {
+    position: fixed;
+    top: 10vh;
+    border-radius: 1em;
+    border: none;
+    right: 0px;
+    color: $text;
+    background-color: $background-color;
+    padding: 0.5em;
+    margin: 0;
+    z-index: 5;
+    width: 7em;
+
+    button {
+        padding: 10px;
+        margin:  2px 10px;
+        width: 7em;
+        height: 5em;
+        background-color: $background-color;
+        border: $primary 1px solid;
+        color: $primary;
+        border-radius: 1em;
+        cursor: pointer;
+        margin-left: 0;
+    }
+}
+@media(max-width: 1700px){
+    .toolbar{
+        width: 15em;
+        display: flex;
+        flex-direction: column;
+    }
+    .filter, .search, .sorting {
+        select, input {
+            max-width: 5em;
+        }
+    }
+    .filter, .sorting {
+        order: 1;
+    }
+    .search{
+        order: 0;
+    }
+    .authors {
+        order: 2;
+    }
+}
+@media(max-width: 600px){
+ .toolbar{
+     position: relative;
+ }
+}

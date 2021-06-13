@@ -1,0 +1,67 @@
+$background-color: #121212;
+$component: #1d1d1d;
+$text: #e8e8e8;
+$primary: #01fff4;
+$secondary: #ff1178;
+
+.form-title {
+    h3 {
+      text-transform: uppercase;
+      color: $text;
+      text-align: center;
+      letter-spacing: 3px;
+      text-shadow: 4px 4px 15px $secondary;
+      margin-top: 1vh;
+      padding: 1em;
+    }
+}
+
+.form {
+    max-width: 35em;
+    width: 100%;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 1em;
+    background-color: $component;
+    list-style-type: none;
+    padding: 0;
+    border: none;
+    border-radius: 1em;
+    box-shadow: 0 5px 50px $primary;
+    .err {
+         color: red;
+         margin-right: auto;
+         margin-left: auto;
+    }
+
+    .form-row {
+        display: flex;
+        background-color: $component;
+        justify-content: flex-end;
+        padding: .5em;
+        border-radius: 1em;
+        
+      }
+
+      label {
+        flex: 1;
+        color: $text;
+      }
+
+      input {
+        flex: 2;
+      }
+
+      input, button {
+        padding: .5em;
+    }
+
+    button {
+        background: $primary;
+        color: black;
+        border: 0;
+        cursor: pointer;
+        flex: 1;
+        border-radius: 1em;
+    }
+}

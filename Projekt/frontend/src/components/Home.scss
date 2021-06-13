@@ -1,0 +1,46 @@
+$background-color: #121212;
+$component: #1d1d1d;
+$text: #e8e8e8;
+$primary: #01fff4;
+$secondary: #ff1178;
+
+.home {
+    min-height: 95vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+button {
+    background: $component;
+    color: $text;
+    border: 1px solid $secondary;
+    padding: 10px;
+    width: 100%;
+    cursor: pointer;
+    border-radius: 1em;
+    &:hover{
+        box-shadow: 4px 1px 15px $secondary;
+    }
+}
+}
+.homeWrapper {
+    min-height: 70vh;
+    width: 60%;
+    border-radius: 2em;
+    background-color: $component;
+    box-shadow: 10px 10px 50px $primary;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+h1 {
+    text-transform: uppercase;
+    color: $text;
+    text-align: center;
+    letter-spacing: 3px;
+    text-shadow: 4px 4px 15px $secondary;
+    margin-top: 1vh;
+    padding: 1em;
+}
+

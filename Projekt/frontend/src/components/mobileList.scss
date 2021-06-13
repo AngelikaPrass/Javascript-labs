@@ -1,0 +1,43 @@
+@media only screen and (max-width: 600px) {
+    .toolbar{
+        position: relative;
+        left: 10%;
+        top: 5%;
+        width: 20em;
+        height: 5em;
+        display: flex;
+        flex-wrap: wrap;
+    }
+    .books-list{
+        display: flex;
+        flex-direction: column;
+        .book{
+            width: 93vw;
+            column-gap: 1px;
+            grid-template-rows: 10% auto auto;
+            .author-wrapper {
+                max-width: 3em;
+
+                h5, h4, h3 {
+                    text-align: left;
+                    word-wrap: break-word;
+                    word-break: break-all;
+                }
+            }
+            .rating{
+                grid-column: 2;
+                grid-row: 2;
+                justify-self: end;
+                align-self: end;
+                padding: 0;
+                p {
+                    order: 1;
+                }
+            }
+        }
+    }
+
+    h5, h4, h3 {
+        word-break: break-all;
+    }
+}

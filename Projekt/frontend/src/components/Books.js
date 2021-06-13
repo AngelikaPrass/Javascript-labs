@@ -1,7 +1,11 @@
 import {useEffect, useState} from "react";
 import { Link } from "react-router-dom";
-import { HiFilter, HiSwitchVertical, HiOutlineTrash, HiHeart, HiOutlineHeart } from "react-icons/hi";
+import { HiFilter, HiSwitchVertical, HiOutlineTrash, HiHeart, HiOutlineHeart, HiSearch } from "react-icons/hi";
 import ScrollButton from './ScrollButton';
+import "./bookList.scss";
+import "./Toolbar.scss";
+import "./mobileList.scss";
+
 
 const axios = require("axios");
 const Books=() => {
@@ -10,13 +14,14 @@ const Books=() => {
     const [sortingFunction, setSortingFunction] = useState(()=>()=>1);
     const [filterFunction, setFilterFunction ] = useState(() => () => true);
     const [toDelete, setToDelete] = useState(new Set());
-    const [styling, setStyling] = useState("");
     const [isLoading, setIsLoading]=useState(true);
     const [isError, setIsError]=useState(false);
     const [displayedData, setDisplayedData]=useState([]);
     const [authors, setAuthors] = useState(new Set());
     const [favourites, setFavourites] = useState(new Set());
     const [favFilter, setFavFilter]=useState(()=>()=>1);
+    const [resetFavs, setResetFavs] = useState(false);
+    const [byAuthor, setByAuthor ] = useState(() => () => 1);
     const [searchTerm, setSearchTerm] = useState("");
     const [color, setColor] = useState(false);
 
@@ -48,14 +53,14 @@ const Books=() => {
     };
     const authorFilterMaker = (a) => {
         return (book) => {
-            if(book.author === a) return true;
+            if(book.author === a || a==="") return true;
             else return false;
         };
     };
 
     useEffect(()=>{
-        setDisplayedData([...data.filter(filterFunction).filter(favFilter).sort(sortingFunction)]);
-    }, [data, sortingFunction, favFilter, filterFunction]);
+        setDisplayedData([...data.filter(filterFunction).filter(favFilter).filter(byAuthor).sort(sortingFunction)]);
+    }, [data, sortingFunction, favFilter, byAuthor, filterFunction]);
 
     useEffect(()=>{
         axios.get("http://localhost:5000/api/book").then(response => {
@@ -145,33 +150,36 @@ const searching = (searchTerm) => {
         }
         else return false;
     }
-}
-
-const displayFavourites = () => {
-    console.log(favourites);
-    setFavFilter(()=>(book) => {
-        if(favourites.has(book.id)) return true;
-        else return false;
-    })
 };
 
-    const style1 = {
-        width: "25em",
-        height: "auto"
-    };
-    const style2 = {
-        visibility: "visible"
-    };
+const displayFavourites = () => {
+    if(!resetFavs){
+        setFavFilter(() => (book) => {
+            return true;
+        });
+        setResetFavs(true);
+    }
+
+    else{
+        setFavFilter(()=>(book) => {
+            if(favourites.has(book.id)) return true;
+            else return false;
+        })
+        setResetFavs(false);
+    }
+};
+
 
 return (
     <div>
         <div className="toolbar">
             <div className="showFavourites">
-               <HiOutlineHeart onClick={displayFavourites} />
+                <p>Ulubione: </p>
+               <HiOutlineHeart className="point" onClick={displayFavourites} />
             </div>
-            <div className="filter" style={styling ? style1 : {}}>
-                <HiFilter onClick={() => {setStyling(!styling)}} />
-                <select name="filterDropdown" onChange={filterType} defaultValue={"brak"} style={styling ? style2 : {}}>
+            <div className="filter">
+                <HiFilter  />
+                <select name="filterDropdown" onChange={filterType} defaultValue={"brak"} >
                     <option value=""> - </option>
                     <option value="horror"> horror </option>
                     <option value="science-fiction"> science-fiction </option>
@@ -185,20 +193,26 @@ return (
                     <option value="fantastyka"> fantastyka </option>
                     <option value="literatura faktu"> literatura faktu </option>
                 </select>
-                <div className="authors">
+            </div>
+            <div className="authors">
+                <p> Filtruj po autorach: </p>
                     <form>
-                    <ul style={styling ? style2 : {}}>
+                    <ul>
                     {Array.from(authors).map(author => (
                         <li> 
-                            <input type="radio" name="radio" value={author} onClick={(e) => setFilterFunction(() => authorFilterMaker(e.target.value))}></input>
+                            <input type="radio" name="radio" value={author} onClick={(e) => setByAuthor(() => authorFilterMaker(e.target.value))}></input>
                             <label htmlFor={author}> {author} </label>
                         </li>
                     ))}
+                        <li> 
+                            <input type="radio" name="radio" value={""} onClick={(e) => setByAuthor(() => authorFilterMaker(e.target.value))}></input>
+                            <label> nie filtruj </label>
+                        </li>
                     </ul>
                     </form>
                 </div>
-            </div>
             <div className="search">
+            <HiSearch />
                 <input type="text" placeholder="Wyszukaj..." onChange={e => {
                     setSearchTerm(e.target.value)
                 setFilterFunction(() => searching(e.target.value))
@@ -218,10 +232,10 @@ return (
                 </select> 
             </div>
         </div>
-        
-        <div className="deleteButton"> 
-            <button onClick={() => massDelete()}> Usuń wszystkie zaznaczone </button>
+        <div className="deleteButton">
+        <button onClick={() => massDelete()}> Usuń wszystkie zaznaczone </button>
         </div>
+
         
         <div className="books-list">
             {isError && <div> Wystąpił błąd </div>}
@@ -240,12 +254,12 @@ return (
                     <h5> {new Date(book.release_date).toLocaleDateString('en-CA')} </h5>
                     </div>
                     <div className="rating">
-                        ocena: {book.rating ? book.rating.toString().slice(0, 3) : "0"} / 5
+                        <p> ocena: {book.rating ? book.rating.toString().slice(0, 3) : "0"} / 5 </p>
                         <HiHeart className={"point" + ((favourites.has(book.id)) ? " filled" : "")} onClick={() => handleFavClick(book.id)}/>
                     </div>
                     <div className="checkbox"> 
                         <HiOutlineTrash />
-                        <input type="checkbox" value="checkbox" onClick={() => handleClick(book.id)}/>
+                        <input className="point" type="checkbox" value="checkbox" onClick={() => handleClick(book.id)}/>
                         <label htmlFor="massdelete"></label>
                     </div>
                 </div>

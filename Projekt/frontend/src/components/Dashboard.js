@@ -3,6 +3,7 @@ import { useEffect, useState } from 'react';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import { useHistory } from "react-router-dom";
 import axios from 'axios';
+import "./Form.scss";
 
 const Dashboard=(props) => {
     const [submiting, setSubmiting] = useState(false);
@@ -56,16 +57,23 @@ validate={(values)=>{
     const errors={};
     const hasNumber = /\d/;
     if (!values.title) errors.title="Wymagane";
+    if(values.title.length > 50) errors.title="Za długi tytuł";
     if (!values.author) errors.author="Wymagane";
     if (hasNumber.test(values.author)) errors.author="Autor nie może mieć cyfry w imieniu / nazwisku";
+    if(values.author.length > 100) errors.author="Za długie, podaj samo nazwisko lub inicjały i nazwisko";
     if (!values.genre) errors.genre="Wymagane";
+    if(values.genre.length > 40) errors.genre = "Za długi gatunek";
+    if(values.genre.length < 5) errors.genre = "Za krótki gatunek";
     if (!values.date) errors.date="Wymagane";
     if (Date.parse(values.date) > Date.now()) {
         errors.date = "Data nie może być późniejsza niż dzisiejsza";
     };
     if (!values.description) errors.description="Wymagane";
+    if(values.description.length < 10) errors.description="Za krótki opis";
     if (!values.coverImage) errors.coverImage="Wymagane";
     if (!values.coverImage.includes("http://") && !values.coverImage.includes("https://")) errors.coverImage="Niepoprawny link";
+    if(values.coverImage.length > 1000) errors.coverImage="Za długi link";
+    if(values.coverImage.length < 20) errors.coverImage="Za krótki link";
     return errors; 
 }}
 onSubmit={(values) => {

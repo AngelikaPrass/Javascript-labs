@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { useHistory } from "react-router-dom";
 import Rating from './Rating';
+import "./Details.scss";
 
 const axios = require('axios');
 

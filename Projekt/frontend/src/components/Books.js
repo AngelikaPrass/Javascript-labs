@@ -16,6 +16,7 @@ const Books=() => {
     const [displayedData, setDisplayedData]=useState([]);
     const [authors, setAuthors] = useState(new Set());
     const [favourites, setFavourites] = useState(new Set());
+    const [favFilter, setFavFilter]=useState(()=>()=>1);
     const [searchTerm, setSearchTerm] = useState("");
     const [color, setColor] = useState(false);
 
@@ -53,8 +54,8 @@ const Books=() => {
     };
 
     useEffect(()=>{
-        setDisplayedData([...data.filter(filterFunction).sort(sortingFunction)]);
-    }, [data, sortingFunction, filterFunction]);
+        setDisplayedData([...data.filter(filterFunction).filter(favFilter).sort(sortingFunction)]);
+    }, [data, sortingFunction, favFilter, filterFunction]);
 
     useEffect(()=>{
         axios.get("http://localhost:5000/api/book").then(response => {
@@ -146,11 +147,12 @@ const searching = (searchTerm) => {
     }
 }
 
-const displayFavourites = (x) => {
-    return (book) => {
-        if(favourites.has(book)) return true;
+const displayFavourites = () => {
+    console.log(favourites);
+    setFavFilter(()=>(book) => {
+        if(favourites.has(book.id)) return true;
         else return false;
-    }
+    })
 };
 
     const style1 = {
@@ -165,7 +167,7 @@ return (
     <div>
         <div className="toolbar">
             <div className="showFavourites">
-               <HiOutlineHeart onClick={(x) => setFilterFunction(() => displayFavourites(x))} />
+               <HiOutlineHeart onClick={displayFavourites} />
             </div>
             <div className="filter" style={styling ? style1 : {}}>
                 <HiFilter onClick={() => {setStyling(!styling)}} />

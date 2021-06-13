@@ -65,7 +65,7 @@ validate={(values)=>{
     };
     if (!values.description) errors.description="Wymagane";
     if (!values.coverImage) errors.coverImage="Wymagane";
-    if (!values.coverImage.includes("http://")) errors.coverImage="Niepoprawny link";
+    if (!values.coverImage.includes("http://") && !values.coverImage.includes("https://")) errors.coverImage="Niepoprawny link";
     return errors; 
 }}
 onSubmit={(values) => {

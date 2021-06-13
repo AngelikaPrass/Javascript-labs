@@ -26,6 +26,7 @@ a {
     flex-direction: row;
     align-items: center;
     align-content: center;
+    z-index: 50;
     
     a:first-of-type{
         margin-left: auto;
@@ -41,52 +42,54 @@ a {
         border-bottom: 1px solid $primary;
     }
 }
+.toolbar{
+    position: absolute;
+    color: $text;
+
+    width: 20em;
+    height: 20em;
+    border: 1px solid $secondary;
+    border-radius: 1em;
+    padding: 2em;
+    z-index: 10;
+    display: grid;
+    grid-template-columns: 50% 50%;
+    column-gap: 5px;
+    grid-template-rows: 20% 40% 40%;
+    grid-template-areas: 
+    "sort favs"
+    "filter filter"
+    "filter filter";
+    .sorting {
+        grid-area: sort;
+        align-self: start;
+        justify-self: start;
+        display: flex;
+        flex-flow: row nowrap;
+        justify-content: space-between;
+        align-items: center;
+        select{
+            margin: 0 0.1em;
+            width: auto;
+            height: 2em;
+        }
+        svg {
+            cursor: pointer;
+        }
+    
+    }
+    .showFavourites{
+        grid-area: favs;
+        align-self: stretch;
+        justify-self: end;
+    }
+    .filter {
+        grid-area: filter;
+    }
+
+}
 
 // Lista książek
-.filter{
-    position: fixed;
-    top: 10vh;
-    height: 2em;
-    border-radius: 5px;
-    border: 1px solid $primary;
-    left: 0px;
-    color: $text;
-    background-color: $background-color;
-    padding: 0.5em;
-    margin: 0;
-    max-width: 15em;
-    width: 100%;
-    select {
-        margin: 0 0.1em;
-        width: auto;
-        height: 2em;
-        visibility: hidden;
-    }
-    .authors{
-        visibility: hidden;
-    }
-
-}
-.sorting {
-    position: fixed;
-    border-radius: 5px;
-    border: 1px solid $primary;
-    left: 0px; 
-    top: 5vh;
-    color: $text;
-    background-color: $background-color;
-    padding: 0.5em;
-    margin: 0;
-
-    select{
-        margin: 0 0.1em;
-        width: auto;
-        height: 2em;
-    }
-    svg {
-        cursor: pointer;
-    }
-}
 
 .deleteButton {
     position: fixed;
@@ -204,9 +207,14 @@ a {
         }
     }
 }
-// .heart {
-//     // align-self: flex-end;
-// }
+.point{
+    cursor: pointer;
+}
+
+.filled {
+    color: $secondary;
+}
+
 .bookDetail {
     margin: 10px;
     padding: 10px;
@@ -268,6 +276,114 @@ a {
 .hovered {
     fill: $primary;
 }
+
+.home {
+min-height: 95vh;
+background: $background-color;
+display: flex;
+align-items: center;
+justify-content: center;
+.wrapper {
+    background: white;
+    min-height: 70vh;
+    width: 60%;
+    background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    border-radius: 2rem;
+    backdrop-filter: blur(2rem);
+    z-index: 2;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+h1 {
+    text-align: center;
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    text-shadow: 2px 2px 5px $secondary;
+    margin-top: 1vh;
+    color: white;
+    padding: 1em;
+}
+.circle1, .circle2 {
+    background: white;
+    background: linear-gradient(to right top, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.3));
+    height: 20rem;
+    width: 20rem;
+    border-radius: 50%;
+    position: absolute;
+}
+.circle1 {
+    top: 5%;
+    left: 10%;
+}
+.circle2{
+    bottom: 5%;
+    right: 5%;
+}
+.smaller1, .smaller2, .smaller3, .smaller4, .smaller5 {
+    height: 10rem;
+    width: 10rem;
+    border-radius: 50%;
+    position: absolute;
+    background: white;
+}
+.small1, .small2, .small3, .small4 {
+    height: 5rem;
+    width: 5rem;
+    border-radius: 50%;
+    position: absolute;
+    background: white;
+}
+
+
+.smaller1, .smaller3, .smaller5, .small1, .small2 {
+    background: linear-gradient(to right top, rgba(255, 17, 120, 0.7), rgba(255, 17, 120, 0.3));
+}
+.smaller2, .smaller4, .small3, .small4 {
+    background: linear-gradient(to right top, rgba(1, 255, 244, 0.5), rgba(1, 255, 244, 0.2));
+}
+.smaller1 {
+    top: 6%;
+    left: 1%;
+}
+.smaller2 {
+    bottom: 8%;
+    left: 3%;
+}
+.smaller3 {
+    top: 6%;
+    right: 3%;
+}
+
+.smaller4 {
+    top: 46%;
+    right: 15%;
+}
+.smaller5{
+    bottom: 32%;
+    left: 20%;
+}
+.small1 {
+    top: 45%;
+    left: 15%;
+}
+.small2 {
+    top:60%;
+    right: 20%;
+}
+
+.small3 {
+    top: 5%;
+    right: 10%;
+}
+.small4 {
+    top: 40%;
+    left: 5%;
+}
+
+
+}
+
 
 @media (max-width: 600px) {
     .books-list {

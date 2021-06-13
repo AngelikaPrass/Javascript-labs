@@ -1,6 +1,5 @@
 import "./App.scss";
 import { BrowserRouter, Route, Switch } from "react-router-dom";
-import { useState } from 'react'
 import Home from "./components/Home";
 import Navbar from './components/Navbar'
 import Books from "./components/Books";
@@ -9,7 +8,6 @@ import EditBook from "./components/EditBook";
 import AddBook from "./components/AddBook";
 
 const App=()=>{
-    const [dataChange, setDataChange] = useState(true);
     return (
         <BrowserRouter>
             <div className="App">
@@ -28,7 +26,7 @@ const App=()=>{
                         <Books />
                     </Route>
                     <Route exact path="/books/:id">
-                        <BookDetail change={dataChange} callback={setDataChange} />
+                        <BookDetail />
                     </Route>
                 </Switch>
             </div>
